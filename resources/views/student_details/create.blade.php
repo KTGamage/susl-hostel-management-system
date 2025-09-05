@@ -203,16 +203,33 @@
         .bottom-div {
             background-color: #E3E3E3;
             height: 110px;
+            position: relative;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            z-index: 2;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             display: flex;               
             align-items: center;
             justify-content: center;
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
-            position: relative;
-            z-index: 2;
-            flex-shrink: 0;
+            padding: 0 40px;
             margin-bottom: 10px;
+        }
+
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .copyright-section {
+            display: flex;
+            align-items: center;
         }
         
         .copyright_logo {
@@ -226,6 +243,19 @@
             font-size: 18px;
             line-height: 1.2;
             margin: 0;
+        }
+
+        .contact-link {
+            color: #009DFF;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+            color: #007acc;
         }
         
         @media (max-width: 768px) {
@@ -261,6 +291,11 @@
             
             .form-container {
                 padding: 25px;
+            }
+
+            .bottom-div {
+                height: auto;
+                padding: 20px;
             }
         }
     </style>
@@ -413,13 +448,19 @@
                 </div>
             </div>
             
-            <!-- Footer with copyright -->
+            <!-- Footer with copyright and contact link-->
             <div class="bottom-div">
-                <img src="{{ asset('images/Copyright.png') }}" alt="Copyright Logo" class="copyright_logo">
-                <div class="copyright">Copyrights SUSL 2025. All Rights Reserved.</div>
+                <div class="footer-content">
+                    <div class="copyright-section">
+                        <img src="{{ asset('images/Copyright.png') }}" alt="Copyright Logo" class="copyright_logo">
+                    <div class="copyright">Copyrights SUSL 2025. All Rights Reserved.</div>
+                </div>
+                    <div class="contact-section">
+                        <a href="{{ route('contact.us') }}" class="contact-link">Contact Us</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

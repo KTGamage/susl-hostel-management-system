@@ -127,6 +127,7 @@
             justify-content: center;
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
+            padding: 0 40px;
         }
         
         .logo {
@@ -157,6 +158,20 @@
             font-weight: 500;
         }
         
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .copyright-section {
+            display: flex;
+            align-items: center;
+        }
+
+
         .copyright_logo {
             height: 40px;
             width: auto;
@@ -168,6 +183,19 @@
             font-size: 18px;
             line-height: 1.2;
             margin: 0;
+        }
+
+        .contact-link {
+            color: #009DFF;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+            color: #007acc;
         }
         
         .login-content {
@@ -260,10 +288,18 @@
         </div>
         
         <!-- Footer with copyright -->
-        <div class="bottom-div">
-            <img src="{{ asset('images/Copyright.png') }}" alt="Copyright Logo" class="copyright_logo">
-            <div class="copyright">Copyrights SUSL 2025. All Rights Reserved.</div>
-        </div>
+        
+         <div class="bottom-div">
+                <div class="footer-content">
+                    <div class="copyright-section">
+                        <img src="{{ asset('images/Copyright.png') }}" alt="Copyright Logo" class="copyright_logo">
+                    <div class="copyright">Copyrights SUSL 2025. All Rights Reserved.</div>
+                </div>
+                    <div class="contact-section">
+                        <a href="{{ route('contact.us') }}" class="contact-link">Contact Us</a>
+                    </div>
+                </div>
+            </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
