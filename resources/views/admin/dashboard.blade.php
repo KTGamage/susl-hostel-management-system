@@ -17,11 +17,19 @@
         }
         
         .container {
+            /* position: relative;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            min-height: 800px; */
             position: relative;
             width: 90%;
             max-width: 1200px;
             margin: 20px auto;
-            min-height: 800px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
         
         .background-div {
@@ -37,7 +45,7 @@
         }
         
         .header {
-            min-height: 150px;
+            /* min-height: 150px;
             background-color: #E3E3E3;
             border-radius: 50px;
             color: #000000ff;
@@ -49,6 +57,23 @@
             border: 2px #3a3a3aff;  
             z-index: 2;
             margin-bottom: 40px;
+            margin-top: 30px; */
+            min-height: 150px;
+            background-color: #E3E3E3;
+            border-radius: 50px;
+            border-color: #000000ff;
+            border-width: 5px;
+            color: #000000ff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(153, 153, 153, 0.5);
+            border: 2px #3a3a3aff;  
+            z-index: 2;
+            margin-bottom: 40px;
+            margin-top: 10px;
+            flex-shrink: 0;
         }
         
         .logo {
@@ -163,19 +188,19 @@
         }
         
         .bottom-div {
+            
             background-color: #E3E3E3;
             height: 110px;
-            position: absolute;
-            bottom: 0px;
-            left: 0;
-            width: 100%;
-            z-index: 2;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             display: flex;               
             align-items: center;
             justify-content: center;
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
+            position: relative;
+            z-index: 2;
+            flex-shrink: 0;
+            margin-bottom: 10px;
         }
         
         .copyright_logo {
@@ -258,7 +283,8 @@
                     <div class="feature-card">
                         <h3>Add Student Details</h3>
                         <p>To add student details</p>
-                        <button class="btn-feature">Click Here</button>
+                        <!-- <button class="btn-feature">Click Here</button> -->
+                        <a href="{{ route('student.details.create') }}" class="btn-feature">Click Here</a>
                     </div>
                 </div>
                 <div class="col-md-6 mb-4">
