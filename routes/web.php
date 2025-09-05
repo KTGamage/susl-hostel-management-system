@@ -25,6 +25,11 @@ Route::get('/admin/student-details/create', [StudentDetailController::class, 'cr
 Route::post('/admin/student-details/store', [StudentDetailController::class, 'store'])
     ->name('student.details.store');
 
+// Contact Us Route
+Route::get('/contact-us', function() {
+    return view('contact'); // You'll need to create this view
+})->name('contact.us');
+
 // Redirect /home to admin login for compatibility
 Route::get('/home', function() {
     return redirect()->route('admin.login');

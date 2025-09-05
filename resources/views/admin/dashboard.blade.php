@@ -189,7 +189,7 @@
         
         .bottom-div {
             
-            background-color: #E3E3E3;
+            /* background-color: #E3E3E3;
             height: 110px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             display: flex;               
@@ -200,8 +200,38 @@
             position: relative;
             z-index: 2;
             flex-shrink: 0;
+            margin-bottom: 10px; */
+
+            background-color: #E3E3E3;
+            height: 110px;
+            position: relative;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;               
+            align-items: center;
+            justify-content: center;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            padding: 0 40px;
             margin-bottom: 10px;
         }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .copyright-section {
+            display: flex;
+            align-items: center;
+        }
+        
         
         .copyright_logo {
             height: 40px;
@@ -215,6 +245,20 @@
             line-height: 1.2;
             margin: 0;
         }
+
+        .contact-link {
+            color: #009DFF;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+            color: #007acc;
+        }
+        
         
         @media (max-width: 768px) {
             .header {
@@ -253,6 +297,11 @@
             
             .container {
                 min-height: 700px;
+            }
+
+            .bottom-div {
+                height: auto;
+                padding: 20px;
             }
         }
     </style>
@@ -298,9 +347,17 @@
         </div>
         
         <!-- Footer with copyright -->
-        <div class="bottom-div">
-            <img src="{{ asset('images/Copyright.png') }}" alt="Copyright Logo" class="copyright_logo">
-            <div class="copyright">Copyrights SUSL 2025. All Rights Reserved.</div>
+       
+         <div class="bottom-div">
+            <div class="footer-content">
+                <div class="copyright-section">
+                        <img src="{{ asset('images/Copyright.png') }}" alt="Copyright Logo" class="copyright_logo">
+                    <div class="copyright">Copyrights SUSL 2025. All Rights Reserved.</div>
+                </div>
+                    <div class="contact-section">
+                        <a href="{{ route('contact.us') }}" class="contact-link">Contact Us</a>
+                    </div>
+            </div>
         </div>
     </div>
 
