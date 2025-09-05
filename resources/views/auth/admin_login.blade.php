@@ -46,6 +46,8 @@
             min-height: 150px;
             background-color: #E3E3E3;
             border-radius: 50px;
+            border-color: #000000ff;
+            border-width: 5px;
             color: #000000ff;
             padding: 20px;
             display: flex;
@@ -55,8 +57,8 @@
             border: 2px #3a3a3aff;  
             z-index: 2;
             margin-bottom: 40px;
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(10px); 
+            margin-top: 10px;
+            flex-shrink: 0;
         }
         
         .login-container {
