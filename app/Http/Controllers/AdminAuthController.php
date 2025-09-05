@@ -48,6 +48,6 @@ class AdminAuthController extends Controller
         Session::forget('admin_user_id');
         Session::forget('admin_id');
         
-        return redirect()->route('admin.login');
+        return redirect()->route('landing');
     }
 }
