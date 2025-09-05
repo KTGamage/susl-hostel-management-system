@@ -232,7 +232,7 @@
             <div class="login-container">
                 <div class="welcome-text">Welcome to Hostel Management System</div>
                 
-                <form method="POST" action="{{ url('/') }}">
+                <form method="POST" action="{{ route('admin.login.post') }}">
                     @csrf
                     <div class="mb-4">
                         <label for="user_id" class="form-label">User ID</label>
