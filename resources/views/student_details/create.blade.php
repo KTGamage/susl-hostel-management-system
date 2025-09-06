@@ -324,18 +324,28 @@
                     <h2 class="form-title">Student Details Entering Page</h2>
                     
                     @if(session('success'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
                     
                     @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Please fix the following errors:</strong>
+                            <ul class="mb-0 mt-2">
                                 @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
                     
@@ -463,5 +473,52 @@
         </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const submitButton = document.querySelector('.btn-submit');
+            
+            // Add form submission debugging
+            form.addEventListener('submit', function(e) {
+                console.log('Form submission triggered');
+                console.log('Form action:', form.action);
+                console.log('Form method:', form.method);
+                
+                // Show loading state
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+                
+                // Re-enable after 3 seconds if still on page
+                setTimeout(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit';
+                }, 3000);
+            });
+            
+            // Add click debugging for submit button
+            submitButton.addEventListener('click', function(e) {
+                console.log('Submit button clicked');
+                
+                // Check if form is valid
+                if (!form.checkValidity()) {
+                    console.log('Form validation failed');
+                    e.preventDefault();
+                    form.reportValidity();
+                    return false;
+                }
+                
+                console.log('Form is valid, proceeding with submission');
+            });
+            
+            // Add debugging for required fields
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.addEventListener('invalid', function() {
+                    console.log('Invalid field:', field.name, field.value);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

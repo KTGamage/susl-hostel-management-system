@@ -19,11 +19,13 @@ Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin
 // Admin Dashboard Route
 Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
 
-// Student Details Routes
-Route::get('/admin/student-details/create', [StudentDetailController::class, 'create'])
-    ->name('student.details.create');
-Route::post('/admin/student-details/store', [StudentDetailController::class, 'store'])
-    ->name('student.details.store');
+// Student Details Routes (Protected)
+Route::middleware(['web'])->group(function () {
+    Route::get('/admin/student-details/create', [StudentDetailController::class, 'create'])
+        ->name('student.details.create');
+    Route::post('/admin/student-details/store', [StudentDetailController::class, 'store'])
+        ->name('student.details.store');
+});
 
 // Contact Us Route
 Route::get('/contact-us', function() {
