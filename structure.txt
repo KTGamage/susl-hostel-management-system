@@ -1,0 +1,53 @@
+│   .editorconfig
+│   .gitattributes
+│   .gitignore
+│   .styleci.yml
+│   artisan
+├── bootstrap
+│   │   app.php
+│   ├── cache
+│   │   │   .gitignore
+│   │   │   packages.php
+│   │   │   services.php
+│   composer.json
+│   package.json
+│   phpunit.xml
+├── resources
+│   ├── css
+│   │   │   app.css
+│   ├── js
+│   │   │   app.js
+│   │   │   bootstrap.js
+│   ├── lang
+│   │   ├── en
+│   │   │   │   auth.php
+│   │   │   │   pagination.php
+│   │   │   │   passwords.php
+│   │   │   │   validation.php
+│   ├── views
+│   │   ├── admin
+│   │   │   │   dashboard.blade.php
+│   │   ├── auth
+│   │   │   │   admin_login.blade.php
+│   │   │   contact.blade.php
+│   │   │   contact_us.blade.php
+│   │   │   details_verified.blade.php
+│   │   │   landing.blade.php
+│   │   ├── student_details
+│   │   │   │   create.blade.php
+│   │   │   │   edit.blade.php
+│   │   │   │   search.blade.php
+├── routes
+│   │   api.php
+│   │   channels.php
+│   │   console.php
+│   │   web.php
+│   server.php
+├── tests
+│   │   CreatesApplication.php
+│   ├── Feature
+│   │   │   ExampleTest.php
+│   │   TestCase.php
+│   ├── Unit
+│   │   │   ExampleTest.php
+│   webpack.mix.js

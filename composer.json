@@ -47,6 +47,9 @@
             "@php artisan key:generate --ansi"
         ]
     },
+    "scripts-descriptions": {
+        "post-deploy": "Run after deployment on Railway"
+    },
     "extra": {
         "laravel": {
             "dont-discover": []
