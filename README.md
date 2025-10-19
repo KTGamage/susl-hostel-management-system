@@ -1,4 +1,4 @@
-# Hostel Management System
+# 🏢Hostel Management System🍃
 
 A comprehensive web-based Hostel Management System built with Laravel to streamline hostel operations for educational institutions. This platform enables efficient management of student details and hostel accommodations.
 
