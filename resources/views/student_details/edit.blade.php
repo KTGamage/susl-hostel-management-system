@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Student - SUSL Hostel Management</title>
+    <title>Edit Student - SUSL Hostel Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -162,6 +162,19 @@
             margin: 0 auto;
         }
         
+        .student-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin-top: 10px;
+        }
+        
         .form-section {
             margin-bottom: 30px;
         }
@@ -226,7 +239,7 @@
         }
         
         .btn-submit {
-            background-color: var(--primary-color);
+            background-color: var(--success);
             border: none;
             border-radius: 10px;
             padding: 14px 40px;
@@ -237,7 +250,7 @@
             display: block;
             margin: 40px auto 0;
             width: 200px;
-            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.4);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -245,9 +258,9 @@
         }
         
         .btn-submit:hover {
-            background-color: var(--primary-dark);
+            background-color: #218838;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(74, 108, 247, 0.5);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5);
         }
         
         .footer {
@@ -435,22 +448,17 @@
             <div class="content-wrapper">
                 <div class="form-container">
                     <div class="form-header">
-                        <h2 class="form-title">Add Student Details</h2>
-                        <p class="form-subtitle">Enter the student information below. All fields marked with * are required.</p>
+                        <h2 class="form-title">Edit Student Details</h2>
+                        <p class="form-subtitle">Update the student information below. All fields marked with * are required.</p>
+                        <div class="student-badge">
+                            <i class="fas fa-id-card"></i> Student ID: {{ $student->student_id }}
+                        </div>
                     </div>
                     
                     @if(session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <i class="fas fa-check-circle me-2"></i>
                             {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    
-                    @if(session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle me-2"></i>
-                            {{ session('error') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
@@ -470,8 +478,9 @@
                         </div>
                     @endif
                     
-                    <form method="POST" action="{{ route('student.details.store') }}">
+                    <form method="POST" action="{{ route('student.details.update', $student->id) }}">
                         @csrf
+                        @method('PUT')
                         
                         <div class="form-section">
                             <h3 class="section-title">
@@ -483,34 +492,35 @@
                                     <label class="form-label">Title <span class="text-danger">*</span></label>
                                     <select class="form-select" name="title" required>
                                         <option value="">Select Title</option>
-                                        <option value="Mr." {{ old('title') == 'Mr.' ? 'selected' : '' }}>Mr.</option>
-                                        <option value="Mrs." {{ old('title') == 'Mrs.' ? 'selected' : '' }}>Mrs.</option>
-                                        <option value="Rev." {{ old('title') == 'Rev.' ? 'selected' : '' }}>Rev.</option>
+                                        <option value="Mr." {{ $student->title == 'Mr.' ? 'selected' : '' }}>Mr.</option>
+                                        <option value="Mrs." {{ $student->title == 'Mrs.' ? 'selected' : '' }}>Mrs.</option>
+                                        <option value="Miss" {{ $student->title == 'Miss' ? 'selected' : '' }}>Miss</option>
+                                        <option value="Rev." {{ $student->title == 'Rev.' ? 'selected' : '' }}>Rev.</option>
                                     </select>
                                 </div>
                                 
                                 <div class="col-md-6">
                                     <label class="form-label">Student ID <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="student_id" placeholder="Enter student ID" value="{{ old('student_id') }}" required>
+                                    <input type="text" class="form-control" name="student_id" value="{{ $student->student_id }}" required>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="full_name" placeholder="Enter student's full name" value="{{ old('full_name') }}" required>
+                                    <input type="text" class="form-control" name="full_name" value="{{ $student->full_name }}" required>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label">Faculty <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="faculty" placeholder="Enter the Faculty" value="{{ old('faculty') }}" required>
+                                    <input type="text" class="form-control" name="faculty" value="{{ $student->faculty }}" required>
                                 </div>
                                 
                                 <div class="col-md-6">
                                     <label class="form-label">Telephone Number <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="telephone_number" placeholder="07XXXXXXXXX" pattern="[0-9]{10}" value="{{ old('telephone_number') }}" required>
+                                    <input type="text" class="form-control" name="telephone_number" value="{{ $student->telephone_number }}" pattern="[0-9]{10}" required>
                                 </div>
                             </div>
                         </div>
@@ -528,12 +538,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label class="form-label">First Year Hostel Name</label>
-                                        <input type="text" class="form-control" name="first_year_hostel" placeholder="Enter hostel name" value="{{ old('first_year_hostel') }}">
+                                        <input type="text" class="form-control" name="first_year_hostel" value="{{ $student->first_year_hostel }}">
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <label class="form-label">Payment Date for Hostel</label>
-                                        <input type="date" class="form-control" name="first_year_payment_date" value="{{ old('first_year_payment_date') }}">
+                                        <input type="date" class="form-control" name="first_year_payment_date" value="{{ $student->first_year_payment_date ? date('Y-m-d', strtotime($student->first_year_payment_date)) : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -546,12 +556,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label class="form-label">Second Year Hostel Name</label>
-                                        <input type="text" class="form-control" name="second_year_hostel" placeholder="Enter hostel name" value="{{ old('second_year_hostel') }}">
+                                        <input type="text" class="form-control" name="second_year_hostel" value="{{ $student->second_year_hostel }}">
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <label class="form-label">Payment Date for Hostel</label>
-                                        <input type="date" class="form-control" name="second_year_payment_date" value="{{ old('second_year_payment_date') }}">
+                                        <input type="date" class="form-control" name="second_year_payment_date" value="{{ $student->second_year_payment_date ? date('Y-m-d', strtotime($student->second_year_payment_date)) : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -564,12 +574,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label class="form-label">Third Year Hostel Name</label>
-                                        <input type="text" class="form-control" name="third_year_hostel" placeholder="Enter hostel name" value="{{ old('third_year_hostel') }}">
+                                        <input type="text" class="form-control" name="third_year_hostel" value="{{ $student->third_year_hostel }}">
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <label class="form-label">Payment Date for Hostel</label>
-                                        <input type="date" class="form-control" name="third_year_payment_date" value="{{ old('third_year_payment_date') }}">
+                                        <input type="date" class="form-control" name="third_year_payment_date" value="{{ $student->third_year_payment_date ? date('Y-m-d', strtotime($student->third_year_payment_date)) : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -582,12 +592,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label class="form-label">Fourth Year Hostel Name</label>
-                                        <input type="text" class="form-control" name="fourth_year_hostel" placeholder="Enter hostel name" value="{{ old('fourth_year_hostel') }}">
+                                        <input type="text" class="form-control" name="fourth_year_hostel" value="{{ $student->fourth_year_hostel }}">
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <label class="form-label">Payment Date for Hostel</label>
-                                        <input type="date" class="form-control" name="fourth_year_payment_date" value="{{ old('fourth_year_payment_date') }}">
+                                        <input type="date" class="form-control" name="fourth_year_payment_date" value="{{ $student->fourth_year_payment_date ? date('Y-m-d', strtotime($student->fourth_year_payment_date)) : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -601,25 +611,25 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label">Guardian's Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="guardian_name" placeholder="Enter guardian's name" value="{{ old('guardian_name') }}" required>
+                                    <input type="text" class="form-control" name="guardian_name" value="{{ $student->guardian_name }}" required>
                                 </div>
                                 
                                 <div class="col-md-6">
                                     <label class="form-label">Guardian's Telephone Number <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="guardian_telephone" placeholder="07XXXXXXXXX" pattern="[0-9]{10}" value="{{ old('guardian_telephone') }}" required>
+                                    <input type="text" class="form-control" name="guardian_telephone" value="{{ $student->guardian_telephone }}" pattern="[0-9]{10}" required>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="form-label">Residential Address <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="residential_address" rows="3" placeholder="Enter the address" required>{{ old('residential_address') }}</textarea>
+                                    <textarea class="form-control" name="residential_address" rows="3" required>{{ $student->residential_address }}</textarea>
                                 </div>
                             </div>
                         </div>
                         
                         <button type="submit" class="btn-submit">
-                            <i class="fas fa-plus-circle"></i> Add Student
+                            <i class="fas fa-save"></i> Update Student
                         </button>
                     </form>
                 </div>
@@ -649,11 +659,11 @@
             
             form.addEventListener('submit', function(e) {
                 submitButton.disabled = true;
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding Student...';
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
                 
                 setTimeout(() => {
                     submitButton.disabled = false;
-                    submitButton.innerHTML = '<i class="fas fa-plus-circle"></i> Add Student';
+                    submitButton.innerHTML = '<i class="fas fa-save"></i> Update Student';
                 }, 5000);
             });
         });
