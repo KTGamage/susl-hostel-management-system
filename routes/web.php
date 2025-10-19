@@ -19,17 +19,33 @@ Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin
 // Admin Dashboard Route
 Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
 
-// Student Details Routes (Protected)
+// Student Details Routes
 Route::middleware(['web'])->group(function () {
+    // Create Student
     Route::get('/admin/student-details/create', [StudentDetailController::class, 'create'])
         ->name('student.details.create');
     Route::post('/admin/student-details/store', [StudentDetailController::class, 'store'])
         ->name('student.details.store');
+
+    // Edit Student
+    Route::get('/admin/student-details/{id}/edit', [StudentDetailController::class, 'edit'])
+        ->name('student.details.edit');
+    Route::put('/admin/student-details/{id}', [StudentDetailController::class, 'update'])
+        ->name('student.details.update');
+
+    // Student Search Routes - Simple view display
+    // Keep the POST route for actual searching
+    Route::post('student-details/search', [StudentDetailController::class, 'searchByID'])
+        ->name('student.details.search.post');
 });
 
-// Contact Us Route
+Route::get('student-details/search', function () {
+    return view('student_details.search');
+})->name('student.details.search');
+
+// Contact Us Route - UPDATED to match your blade file
 Route::get('/contact-us', function() {
-    return view('contact'); // You'll need to create this view
+    return view('contact_us'); // Changed from 'contact' to 'contact_us'
 })->name('contact.us');
 
 // Redirect /home to admin login for compatibility
