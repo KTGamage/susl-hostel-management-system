@@ -1,0 +1,9 @@
+.git/
+.github/
+node_modules/
+storage/*.key
+.env
+.dockerignore
+Dockerfile
+docker-compose.yml
+README.md
