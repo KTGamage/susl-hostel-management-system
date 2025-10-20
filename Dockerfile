@@ -30,20 +30,24 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 # Install Composer
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
-# Copy application files
-COPY . .
+# Create necessary directories
+RUN mkdir -p /var/log/supervisor
 
-# Copy configuration files
+# Copy configuration files first (for better caching)
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Copy production environment file
+# Copy application files
+COPY . .
+
+# Copy production environment file (if exists)
 COPY .env.production .env
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html/storage
 RUN chown -R www-data:www-data /var/www/html/bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
+RUN chmod +x docker/startup.sh
 
 # Install dependencies and optimize
 RUN composer install --no-dev --optimize-autoloader
