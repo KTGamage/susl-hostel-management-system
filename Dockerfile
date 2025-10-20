@@ -28,10 +28,12 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
-COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Create necessary directories
 RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /var/www/html/storage/framework/{sessions,views,cache}
+RUN mkdir -p /var/www/html/bootstrap/cache
 
 # Copy configuration files first (for better caching)
 COPY docker/nginx.conf /etc/nginx/nginx.conf
@@ -40,7 +42,7 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Copy application files
 COPY . .
 
-# Copy production environment file (if exists)
+# Copy production environment file
 COPY .env.production .env
 
 # Set proper permissions
@@ -50,10 +52,7 @@ RUN chmod -R 775 storage bootstrap/cache
 RUN chmod +x docker/startup.sh
 
 # Install dependencies and optimize
-RUN composer install --no-dev --optimize-autoloader
-
-# Generate key if not exists (will use the one from .env.production)
-RUN php artisan key:generate --no-interaction --force || true
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Expose port 8000
 EXPOSE 8000
