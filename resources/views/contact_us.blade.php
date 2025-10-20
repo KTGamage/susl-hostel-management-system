@@ -462,8 +462,8 @@
                     <i class="fas fa-phone-alt"></i>
                 </div>
                 <h3>Phone</h3>
-                <p>+94 45 222 5555</p>
-                <p>+94 45 222 5556</p>
+                <p>+94-45-2280014</p>
+                <p>+94-45-2280087</p>
             </div>
             
             <div class="contact-card">
@@ -486,15 +486,17 @@
         
         <div class="map-info-section">
             <div class="map-container">
-                <div id="university-map"></div>
-                <div class="map-controls">
+                <div id="university-map">
+                    <div class="map-controls">
                     <button class="map-btn" onclick="openGoogleMaps()">
                         <i class="fas fa-external-link-alt"></i> Open in Google Maps
                     </button>
                     <button class="map-btn" onclick="getDirections()">
                         <i class="fas fa-directions"></i> Get Directions
                     </button>
+                    </div>
                 </div>
+                
             </div>
             
             <div class="info-container">
@@ -536,10 +538,8 @@
                     </div>
                     <div class="info-content">
                         <h4>Location Details</h4>
-                        <p>Main Campus: Belihuloya, Ratnapura District<br>Province: Sabaragamuwa<br>Coordinates: 6.7167° N, 80.7667° E</p>
-                        <a href="https://maps.google.com/?q=Sabaragamuwa+University+of+Sri+Lanka,Belihuloya" target="_blank" class="maps-link">
-                            <i class="fas fa-map-marked-alt"></i> View on Google Maps
-                        </a>
+                        <p>Main Campus: Belihuloya, Ratnapura District<br>Province: Sabaragamuwa<br>Coordinates: 6.7146° N, 80.7872° E</p>
+                        
                     </div>
                 </div>
             </div>
@@ -571,7 +571,7 @@
         // Initialize the map
         function initMap() {
             // Sabaragamuwa University coordinates
-            const universityCoords = [6.7167, 80.7667];
+            const universityCoords = [6.7146, 80.7872];
             
             // Create map
             const map = L.map('university-map').setView(universityCoords, 15);
