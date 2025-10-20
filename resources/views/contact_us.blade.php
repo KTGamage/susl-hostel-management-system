@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
         body {
@@ -175,15 +176,36 @@
             height: 400px;
         }
         
-        .map-placeholder {
+        #university-map {
             width: 100%;
             height: 100%;
-            background: #E3E3E3;
+            border-radius: 20px;
+        }
+        
+        .map-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #64748B;
-            font-size: 18px;
+            gap: 10px;
+        }
+        
+        .map-btn {
+            background: #4a6cf7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .map-btn:hover {
+            background: #3a5cd8;
+            transform: translateY(-2px);
         }
         
         .info-container {
@@ -239,6 +261,28 @@
             color: #64748B;
             margin: 0;
             line-height: 1.6;
+        }
+        
+        /* Google Maps Link */
+        .maps-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #4a6cf7;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            padding: 8px 16px;
+            border: 1px solid #4a6cf7;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .maps-link:hover {
+            background: #4a6cf7;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.3);
         }
         
         /* Developer Section */
@@ -360,6 +404,17 @@
                 flex-direction: column;
                 text-align: center;
             }
+            
+            .map-controls {
+                bottom: 10px;
+                right: 10px;
+                flex-direction: column;
+            }
+            
+            .map-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -408,6 +463,7 @@
                 </div>
                 <h3>Phone</h3>
                 <p>+94 45 222 5555</p>
+                <p>+94 45 222 5556</p>
             </div>
             
             <div class="contact-card">
@@ -415,7 +471,8 @@
                     <i class="fas fa-envelope"></i>
                 </div>
                 <h3>Email</h3>
-                <p>codeorbit@gmail.com</p>
+                <p>hostel@sab.ac.lk</p>
+                <p>info@sab.ac.lk</p>
             </div>
             
             <div class="contact-card">
@@ -423,15 +480,20 @@
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <h3>Address</h3>
-                <p>Sabaragamuwa University<br>Belihuloya<br>Sri Lanka</p>
+                <p>Sabaragamuwa University of Sri Lanka<br>P.O. Box 02<br>Belihuloya, 70140<br>Sri Lanka</p>
             </div>
         </div>
         
         <div class="map-info-section">
             <div class="map-container">
-                <div class="map-placeholder">
-                    <i class="fas fa-map-marked-alt" style="font-size: 48px; margin-right: 15px;"></i>
-                    <span>University Location Map</span>
+                <div id="university-map"></div>
+                <div class="map-controls">
+                    <button class="map-btn" onclick="openGoogleMaps()">
+                        <i class="fas fa-external-link-alt"></i> Open in Google Maps
+                    </button>
+                    <button class="map-btn" onclick="getDirections()">
+                        <i class="fas fa-directions"></i> Get Directions
+                    </button>
                 </div>
             </div>
             
@@ -467,6 +529,19 @@
                         <p>For urgent hostel matters after office hours, contact security: +94 45 222 5556</p>
                     </div>
                 </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Location Details</h4>
+                        <p>Main Campus: Belihuloya, Ratnapura District<br>Province: Sabaragamuwa<br>Coordinates: 6.7167° N, 80.7667° E</p>
+                        <a href="https://maps.google.com/?q=Sabaragamuwa+University+of+Sri+Lanka,Belihuloya" target="_blank" class="maps-link">
+                            <i class="fas fa-map-marked-alt"></i> View on Google Maps
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -490,8 +565,60 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <script>
+        // Initialize the map
+        function initMap() {
+            // Sabaragamuwa University coordinates
+            const universityCoords = [6.7167, 80.7667];
+            
+            // Create map
+            const map = L.map('university-map').setView(universityCoords, 15);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Add university marker
+            const universityMarker = L.marker(universityCoords).addTo(map);
+            universityMarker.bindPopup(`
+                <strong>Sabaragamuwa University of Sri Lanka</strong><br>
+                <em>Main Campus - Belihuloya</em><br>
+                P.O. Box 02, Belihuloya, 70140
+            `).openPopup();
+            
+            // Add circle to highlight area
+            L.circle(universityCoords, {
+                color: '#4a6cf7',
+                fillColor: '#4a6cf7',
+                fillOpacity: 0.1,
+                radius: 300
+            }).addTo(map);
+        }
+
+        // Open Google Maps in new tab
+        function openGoogleMaps() {
+            window.open('https://maps.google.com/?q=Sabaragamuwa+University+of+Sri+Lanka,Belihuloya', '_blank');
+        }
+
+        // Get directions (opens Google Maps with directions)
+        function getDirections() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    window.open(`https://www.google.com/maps/dir/${userLat},${userLng}/Sabaragamuwa+University+of+Sri+Lanka,Belihuloya/`, '_blank');
+                }, function() {
+                    // If geolocation fails, open directions without user location
+                    window.open('https://www.google.com/maps/dir//Sabaragamuwa+University+of+Sri+Lanka,Belihuloya/', '_blank');
+                });
+            } else {
+                window.open('https://www.google.com/maps/dir//Sabaragamuwa+University+of+Sri+Lanka,Belihuloya/', '_blank');
+            }
+        }
+
         // Back to top button functionality
         document.querySelector('.back-to-top').addEventListener('click', function(e) {
             e.preventDefault();
@@ -509,6 +636,11 @@
             } else {
                 header.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
             }
+        });
+
+        // Initialize map when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
         });
     </script>
 </body>
