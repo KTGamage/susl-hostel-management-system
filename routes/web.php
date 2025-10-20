@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\StudentDetailController;
 
+// Health check route for Railway
+Route::get('/health', function() {
+    return response()->json(['status' => 'healthy', 'timestamp' => now()]);
+});
+
 // Landing Page Route
 Route::get('/', function() {
     return view('landing');
@@ -33,8 +38,7 @@ Route::middleware(['web'])->group(function () {
     Route::put('/admin/student-details/{id}', [StudentDetailController::class, 'update'])
         ->name('student.details.update');
 
-    // Student Search Routes - Simple view display
-    // Keep the POST route for actual searching
+    // Student Search Routes
     Route::post('student-details/search', [StudentDetailController::class, 'searchByID'])
         ->name('student.details.search.post');
 });
@@ -43,9 +47,9 @@ Route::get('student-details/search', function () {
     return view('student_details.search');
 })->name('student.details.search');
 
-// Contact Us Route - UPDATED to match your blade file
+// Contact Us Route
 Route::get('/contact-us', function() {
-    return view('contact_us'); // Changed from 'contact' to 'contact_us'
+    return view('contact_us');
 })->name('contact.us');
 
 // Redirect /home to admin login for compatibility

@@ -1,29 +1,30 @@
 #!/bin/sh
 
-echo "Deploying Laravel application..."
+echo "Running deployment tasks..."
 
-# Install dependencies
-composer install --no-dev --optimize-autoloader
-
-# Generate application key if not exists
-if [ -z "$(grep APP_KEY=base64 .env)" ]; then
-    php artisan key:generate
-fi
+# Wait for database to be ready (if using external DB)
+echo "Waiting for database connection..."
+sleep 10
 
 # Run database migrations
 php artisan migrate --force
 
-# Cache configuration
+# Clear and cache config
+php artisan config:clear
 php artisan config:cache
 
-# Cache routes
+# Clear and cache routes
+php artisan route:clear
 php artisan route:cache
 
-# Cache views
+# Clear and cache views
+php artisan view:clear
 php artisan view:cache
 
-# Set storage permissions
-chmod -R 775 storage
-chmod -R 775 bootstrap/cache
+# Cache events
+php artisan event:cache
 
-echo "Deployment completed!"
+# Set storage permissions
+chmod -R 775 storage bootstrap/cache
+
+echo "Deployment tasks completed!"
