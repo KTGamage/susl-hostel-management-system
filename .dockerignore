@@ -10,3 +10,5 @@ storage/framework/views/*
 .env
 .env.local
 .env.testing
+.env.example
+.env.production

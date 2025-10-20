@@ -6,7 +6,20 @@ use App\Http\Controllers\StudentDetailController;
 
 // Health check route for Railway
 Route::get('/health', function() {
-    return response()->json(['status' => 'healthy', 'timestamp' => now()]);
+    return response()->json([
+        'status' => 'healthy',
+        'timestamp' => now(),
+        'service' => 'Hostel Management System',
+        'environment' => app()->environment()
+    ]);
+});
+
+// Add a simple test route
+Route::get('/test', function() {
+    return response()->json([
+        'message' => 'Application is running',
+        'timestamp' => now()
+    ]);
 });
 
 // Landing Page Route
